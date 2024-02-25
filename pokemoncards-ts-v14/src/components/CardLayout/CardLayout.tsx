@@ -3,13 +3,10 @@
 import cards from "../../../public/data/cards.json";
 import Link from "next/link";
 import Card from "@/components/Card/Card";
-import { useState } from "react";
-import "/public/css/global.css";
-import "/public/css/cards.css";
+import { SetStateAction, useState } from "react";
 import { animate } from "framer-motion";
 import cardLayoutStyles from './style.module.css';
 
-// window.cards = cards;
 const showcase = cards[0];
 const basics = cards.slice(1, 4);
 const reverse = [...cards.slice(4, 7), ...cards.slice(70,76)];
@@ -29,15 +26,14 @@ const rainbow = cards.slice(52, 58);
 const gold = cards.slice(58, 64);
 const veeGallery = cards.slice(64, 70);
 const shinyVault = cards.slice(85,91);
-const isLoading = false;
 
 export default function CardLayout() {
 
-  const [selectedCard, setSelectedCard] = useState('');
+  const [selectedCard, setSelectedCard] = useState<HTMLElement | undefined>();
 
-  const clickHandler = (target: any, centerX?: number, centerY?: number) => {
+  const clickHandler = (target: HTMLElement, centerX?: number, centerY?: number) => {
     if (selectedCard) {
-      animate((selectedCard as any)?.parentElement, {zIndex: 90}, { duration: 0 }).then((() => {
+      animate((selectedCard as HTMLElement)?.parentElement, {zIndex: 90}, { duration: 0 }).then((() => {
         animate(selectedCard, { scale: 1, x: 0, y: 0, zIndex: 1 }, { duration: 0.4 }).then(() => {
           animate(selectedCard, { zIndex: 0 }, { duration: 0 })
         })
@@ -46,17 +42,17 @@ export default function CardLayout() {
     if (selectedCard != target) {
       animate(target.parentElement, {zIndex: 999}, { duration: 0 }).then(() => {
         animate(target, { position: 'relative', zIndex: 999 }, { duration: 0 }).then(() => {
-          animate(target, { scale: 1.5, x: centerX, y: centerY }, { duration: 0.6 })
+          animate(target, { scale: 1.5, x: centerX, y: centerY }, { duration: 0.5 })
         })
       })
     }
-    setSelectedCard(selectedCard == target ? '' : target);
+    setSelectedCard(selectedCard == target ? undefined : target);
     return true;
   };
 
   return (
     <div
-      onClick={() => clickHandler(selectedCard)}
+      onClick={() => clickHandler(selectedCard as HTMLElement)}
     >
       <main>
         <header>
@@ -84,7 +80,7 @@ export default function CardLayout() {
                 name={showcase.name}
                 set={showcase.set}
                 number={showcase.number}
-                types={showcase.types}
+                types={showcase.types as string[]}
                 supertype={showcase.supertype}
                 subtypes={showcase.subtypes}
                 rarity={showcase.rarity}
@@ -128,7 +124,7 @@ export default function CardLayout() {
               name={card.name}
               img={card.images.large}
               number={card.number}
-              types={card.types}
+              types={card.types  as string[]}
               supertype={card.supertype}
               subtypes={card.subtypes}
               isGroup={true}

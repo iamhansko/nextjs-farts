@@ -1,32 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-// import "/public/css/global.css";
-// import "/public/css/cards.css";
-// import "/public/css/cards/basic.css";
-// import "/public/css/cards/reverse-holo.css";
-// import "/public/css/cards/regular-holo.css";
-// import "/public/css/cards/cosmos-holo.css";
-// import "/public/css/cards/amazing-rare.css";
-// import "/public/css/cards/radiant-holo.css";
-// import "/public/css/cards/v-regular.css";
-// import "/public/css/cards/v-full-art.css";
-// import "/public/css/cards/v-max.css";
-// import "/public/css/cards/v-star.css";
-// import "/public/css/cards/trainer-full-art.css";
-// import "/public/css/cards/rainbow-holo.css";
-// import "/public/css/cards/rainbow-alt.css";
-// import "/public/css/cards/secret-rare.css";
-// import "/public/css/cards/trainer-gallery-holo.css";
-// import "/public/css/cards/trainer-gallery-v-regular.css";
-// import "/public/css/cards/trainer-gallery-v-max.css";
-// import "/public/css/cards/trainer-gallery-secret-rare.css";
-// import "/public/css/cards/shiny-rare.css";
-// import "/public/css/cards/shiny-v.css";
-// import "/public/css/cards/shiny-vmax.css";
-// import "/public/css/cards/swsh-pikachu.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Pokemon Cards",
@@ -40,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

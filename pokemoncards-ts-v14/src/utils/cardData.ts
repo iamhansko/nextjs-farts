@@ -1,10 +1,11 @@
 import altArts from "./alternate-arts.json";
+import promos from "./promos.json";
 
-export function isDefined (v: any) {
+export function isDefined (v: string | string[] | boolean) {
   return typeof v !== "undefined" && v !== null;
 }
 
-export function cardImage (img: any, set: any, number: any) {
+export function cardImage (img: string, set: string, number: string) {
   if ( isDefined( img ) ) {
     return img;
   }
@@ -14,7 +15,7 @@ export function cardImage (img: any, set: any, number: any) {
   return "";
 }
 
-export function foilMaskImage ( prop: any, type = "masks", rarity: any, supertype: any, promos: any, id: any, subtypes: any, set: any, number: any, isReverse?: any) {
+export function foilMaskImage ( prop: string | boolean, type = "masks", rarity: string, supertype: string, id: string, subtypes: string[], set: string, number: string, isReverse?: boolean) {
   //Shiny Vault Card (starts with sv)
   const isShiny = isDefined(number) && number.toLowerCase().startsWith( "sv" );
   //Trainer / Galar Gallery Card (not shiny)
@@ -122,7 +123,7 @@ export function foilMaskImage ( prop: any, type = "masks", rarity: any, supertyp
   }
 
   if ( isPromo ) {
-    let promoStyle = promos.get(id);
+    let promoStyle = (promos as any)[id];
     if ( promoStyle ) {
       style = promoStyle.style.toLowerCase();
       etch = promoStyle.etch.toLowerCase();

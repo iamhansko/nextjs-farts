@@ -1,24 +1,18 @@
 'use client';
 
-import promosJson from "../promos.json";
-import baseStyles from '../../../public/css/cards/base.module.css';
 import Image from "next/image";
-import swshPikachuStyles from '../../../public/css/cards/swsh-pikachu.module.css'
-import { useState } from "react";
 import { useAnimate } from "framer-motion";
 import { cardImage, foilMaskImage } from "@/utils/cardData";
-import { MouseMoveHandler, MouseOutHandler } from "@/utils/animation";
-import cardStyle from './style.module.css';
-
-const promos: any = promosJson;
+import { MouseMoveHandler, MouseOutHandler } from "@/utils/cardAnimation";
+import cardStyles from './style.module.css';
 
 type CardProps = {
-  clickHandler : any
+  clickHandler : (target: HTMLElement, x: number, y: number) => {}
   id : string
   name: string
   set?: string
   number: string
-  types: any // string[]
+  types: string[]
   supertype: string
   subtypes: string[]
   rarity?: string
@@ -34,17 +28,13 @@ export default function Card({
   clickHandler,
   id, name, set, number, types, supertype, subtypes, rarity, isReverse, showcase, img, foil, mask, isGroup = false,
 } : CardProps) {
-  img = cardImage( img, set, number);
-  foil = foilMaskImage( foil, "foils", rarity, supertype, promos, id, subtypes, set, number);
-  mask = foilMaskImage( mask, "masks", rarity, supertype, promos, id, subtypes, set, number);
+  img = cardImage( img as string, set as string, number);
+  foil = foilMaskImage( foil as string, "foils", rarity as string, supertype, id, subtypes, set as string, number) as string;
+  mask = foilMaskImage( mask as string, "masks", rarity as string, supertype, id, subtypes, set as string, number) as string;
   const back = "https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg";
   const back_img = back;
   const img_base = img?.startsWith("http") ? "" : "https://images.pokemontcg.io/";
   const front_img = img_base + img;
-
-  let active = false;
-  let interacting = false;
-  const [loading, setLoading] = useState(true);
 
   rarity = rarity?.toLowerCase();
   supertype = supertype.toLowerCase();
@@ -66,29 +56,22 @@ export default function Card({
 
   return (
     <div
-      className={cardStyle.cardBox}
+      className={cardStyles.cardBox}
       ref={scope}
       onClick={(e) => {cardClickHandler(e)}}
     >
       <div
         onMouseMove={(e) => MouseMoveHandler(e, rarity as string, mask as string, foil as string)}
         onMouseOut={(e) => MouseOutHandler(e, rarity as string, mask as string)}
-        className={
-          `${swshPikachuStyles.card} ${baseStyles.cardComponent} 
-          ${baseStyles.card} ${baseStyles[type]} ${baseStyles.interactive} 
-          ${active ? baseStyles.active : ""} 
-          ${interacting ? baseStyles.interacting : ""} 
-          ${loading ? baseStyles.loading : ""} 
-          ${!!mask ? baseStyles.masked : ""}`
-        }
+        className={`${cardStyles.card} ${cardStyles[type]}`}
         data-number={number}
         data-set={set}
         data-subtypes={subtype}
         data-supertype={supertype}
         data-rarity={rarity}
       >
-        <div className={baseStyles.card__translater}>
-          <button className={baseStyles.card__rotator}>
+        <div className={cardStyles.card__translater}>
+          <button className={cardStyles.card__rotator}>
             <Image
               src={back_img}
               alt="The back of a Pokemon Card, a Pokeball in the center with Pokemon logo above and below"
@@ -103,7 +86,6 @@ export default function Card({
                 loading="lazy"
                 width="660"
                 height="921"
-                onLoad={() => { setLoading(false); }}
               />
               <div className={"shine"}></div>
               <div className={"glare"}></div>
