@@ -83,7 +83,7 @@ header svg {
 }
 
 .showcase {
-  z-index: 99;
+  /* z-index: 99; */
   max-width: min(330px, 80vw);
   margin: auto;
 }

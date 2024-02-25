@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "/public/css/global.css";
-import "/public/css/cards.css";
+// import "/public/css/global.css";
+// import "/public/css/cards.css";
 // import "/public/css/cards/basic.css";
 // import "/public/css/cards/reverse-holo.css";
 // import "/public/css/cards/regular-holo.css";
